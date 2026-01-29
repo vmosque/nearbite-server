@@ -1,6 +1,8 @@
 // ℹ️ Gets access to environment variables/settings
 require("dotenv").config();
 
+const cors = require("cors");
+
 // ℹ️ Connects to the database
 require("./db");
 
