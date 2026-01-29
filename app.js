@@ -12,12 +12,20 @@ const app = express();
 const helmet = require("helmet");
 app.use(helmet());
 
+// CORS
+const cors = require("cors");
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
+
 // ℹ️ Middlewares
 require("./config")(app);
 
 // 👇 Routes
 const authRoutes = require("./routes/auth.routes");
-app.use("/api/auth", authRoutes);
+app.use("/auth", authRoutes);
 
 const mealRoutes = require("./routes/meal.routes");
 app.use("/api/meals", mealRoutes);

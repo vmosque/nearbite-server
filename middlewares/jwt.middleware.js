@@ -1,26 +1,16 @@
 const jwt = require("jsonwebtoken");
 
-function isAuthenticated(req, res, next) {
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "Bearer" &&
-    req.headers.authorization.split(" ")[1]
-  ) {
-    const theTokenInHeaders = req.headers.authorization.split(" ")[1];
+const isAuthenticated = (req, res, next) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) return res.status(401).json({ message: "No token" });
 
-    try {
-      const decodedToken = jwt.verify(
-        theTokenInHeaders,
-        process.env.TOKEN_SECRET,
-      );
-      req.payload = decodedToken;
-      next();
-    } catch (error) {
-      res.status(403).json({ errorMessage: "Invalid Token" });
-    }
-  } else {
-    res.status(403).json({ errorMessage: "Headers Malformed" });
+    const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.payload = payload;
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
   }
-}
+};
 
 module.exports = { isAuthenticated };

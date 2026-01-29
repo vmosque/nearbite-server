@@ -7,22 +7,13 @@ const reservationSchema = new Schema(
       ref: "Meal",
       required: true,
     },
-
-    reservedBy: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-
-    status: {
-      type: String,
-      enum: ["active", "cancelled"],
-      default: "active",
-    },
   },
-  {
-    timestamps: true,
-  },
+  { timestamps: true },
 );
 
 module.exports = model("Reservation", reservationSchema);
