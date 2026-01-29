@@ -23,6 +23,13 @@ app.use(
 // ℹ️ Middlewares
 require("./config")(app);
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    service: "NearBite API",
+  });
+});
+
 // 👇 Routes
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
