@@ -23,10 +23,12 @@ app.use(
 // ℹ️ Middlewares
 require("./config")(app);
 
+//  HEALTH CHECK (DEPLOY TEST)
 app.get("/", (req, res) => {
   res.status(200).json({
-    status: "OK",
+    status: "DEPLOY_TEST_OK",
     service: "NearBite API",
+    timestamp: new Date().toISOString(),
   });
 });
 
@@ -40,7 +42,6 @@ app.use("/api/meals", mealRoutes);
 const reservationRoutes = require("./routes/reservation.routes");
 app.use("/api/reservations", reservationRoutes);
 
-// ❗ Error handling
 require("./error-handling")(app);
 
 module.exports = app;
